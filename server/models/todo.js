@@ -1,8 +1,11 @@
 const mongoose = require('mongoose')
 
 var Todo = mongoose.model('Todo',{
-  text:{type:String}
-,
+  text:{type:String,
+  require:true,
+  minlength:1,
+   trim:true
+ },
 completed:{
   type:Boolean
 },

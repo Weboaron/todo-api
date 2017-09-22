@@ -22,6 +22,17 @@ app.post('/todos',(req,res)=>{
 })
 
 
+app.get('/todos',(req,res)=>{
+  Todo.find({},(err,todos)=>{
+    console.log(todos)
+    if(todos){
+      res.send({todos});
+    }else{
+      console.log('undefined')
+    }
+  })
+})
+
 app.listen(3000,()=>{
   console.log('Listening on port 3000')
 })
