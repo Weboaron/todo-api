@@ -41,7 +41,7 @@ app.get('/todos/:id',(req,res)=>{
   }
   Todo.findById(id,(err,todo)=>{
     if(todo){
-        res.send(JSON.stringify(todo,undefined,2))
+        res.send(todo)
     }else if(!todo){
       res.status(404).send("The user no found")
     }
