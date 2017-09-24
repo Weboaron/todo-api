@@ -1,6 +1,7 @@
 const expect = require('expect');
 const request = require('supertest');
 const {ObjectID} = require('mongodb');
+const _ = require('lodash')
 
 const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
@@ -137,3 +138,37 @@ describe('DELETE /todos/:id',()=>{
     .end(done);
   });
 });
+
+describe('PATCH /todos/:id',()=>{
+  it('should update the todo',(done)=>{
+    var id = todos[0]._id.toHexString();
+    var text = "Ofir Bo"
+
+    request(app)
+    .patch(`/todos/${id}`)
+    .send({text,completed:true})
+    .expect(200)
+    .expect((res)=>{
+      expect(res.body.text).toBe(text)
+      expect(res.body.completed).toBe(true)
+      expect(res.body.completedAt).toBeAn('number')
+    })
+    .end(done)
+  });
+
+  it('should clear completedAt when todo is not completed',(done)=>{
+    var id = todos[1]._id.toHexString();
+    var text = "Ofir Boaro"
+
+    request(app)
+    .patch(`/todos/${id}`)
+    .send({text,copleted:false})
+    .expect(200)
+    .expect((res)=>{
+      expect(res.body.text).toBe(text)
+      expect(res.body.completed).toBe(false)
+      expect(res.body.completedAt).toBe(null)
+    })
+    .end(done)
+  });
+  })
