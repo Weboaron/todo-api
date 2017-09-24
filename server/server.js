@@ -57,9 +57,9 @@ app.delete('/todos/:id',(req,res)=>{
     return res.status(404).send();
   }
 
-    Todo.findByIdAndRemove({id},(err,doc)=>{
-      if(doc){
-        return res.send(doc)
+    Todo.findByIdAndRemove(id,(err,todo)=>{
+      if(todo){
+        return res.send(todo)
       }else{
         return res.status(404).send()
       }
